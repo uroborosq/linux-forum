@@ -7,7 +7,7 @@ async function bootstrap() {
     logger: ['error', 'warn']
   });
   let port = process.env.PORT;
-  if (port == "") {
+  if (port === undefined) {
     port = "3000"
     console.log("WARN: $PORT is not specified, using 3000 by default")
   }
