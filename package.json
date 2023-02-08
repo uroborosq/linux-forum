@@ -11,7 +11,7 @@
     "node": "^18.13.0"
   },
   "scripts": {
-    "build": "nest build",
+    "build": "nest build; npm install --prefix=public; npm run postinstall --prefix=public",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

@@ -1,0 +1,220 @@
+body {
+    background-color: rgb(30, 30, 30);
+    color: ghostwhite;
+    font-size: 15px;
+    line-height: normal;
+    font-family: "Source Code Pro", serif;
+    /*font-weight: normal;*/
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: solid rgb(70, 70, 70) 1px;
+    border-left: solid rgb(70, 70, 70) 1px;
+    border-right: solid rgb(70, 70, 70) 1px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 10px 5px 5px rgb(45, 45, 45);
+}
+
+.top__logo {
+    margin-right: 2%;
+    margin-left: 1%;
+}
+
+.top__navbar {
+    display: flex;
+    padding: 1px;
+    margin-left: auto;
+    margin-right: 1%;
+}
+
+.top__navbar > *
+{
+    padding: 10px;
+    border-right: solid gray 1px;
+}
+
+.top__navbar > a:link {
+    color: ghostwhite;
+    text-decoration: none;
+}
+
+.top__navbar > a:visited {
+    color: ghostwhite;
+    text-decoration: none;
+}
+
+.top__navbar > a:hover {
+    color: aqua;
+    text-decoration: none;
+}
+
+#top__navbar_lc{
+    border-right: 0;
+}
+
+.news {
+    padding: 10px;
+    max-width: 30%;
+}
+.news__list {
+    display: grid;
+    border: solid rgb(70, 70, 70) 1px;
+}
+
+
+
+.news__list > div:nth-child(odd) {
+    background-color: rgb(35, 35, 35);
+}
+
+.news__list > div:nth-child(even) {
+    background-color: rgb(25, 25, 25);
+}
+
+.news__list > div {
+    border: solid rgb(70, 70, 70) 1px;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table > tbody > tr:nth-child(odd) {
+    background-color: rgb(35, 35, 35);
+}
+
+table > tbody > tr:nth-child(even) {
+    background-color: rgb(25, 25, 25);
+
+}
+
+tr, th, td {
+    border: solid rgb(70, 70, 70) 1px;
+}
+
+
+@media not screen  and (min-width: 720px) {
+    .news {
+        display: none;
+    }
+}
+
+
+.usefulquote {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding: 2%;
+}
+
+main {
+    display: block;
+    background-color: rgb(35, 35, 35);
+    border-top: solid rgb(55, 55, 55) 1px;
+}
+
+#mainpage {
+    display: flex;
+    justify-content: end;
+}
+
+.information {
+    display: flex;
+    flex-direction: column;
+    min-width: 70%;
+}
+
+.ascii_art {
+    display: none;
+}
+
+footer {
+    display: flex;
+    align-items: baseline;
+    color: gray;
+}
+
+#interestingstats {
+    font-style: italic;
+    margin-left: auto;
+}
+
+form{
+    width: auto;
+    margin-right: auto;
+}
+
+form > fieldset > p > label {
+    display: inline-block;
+    width: 12em;
+
+}
+form > fieldset > p > input {
+    vertical-align:  middle;
+}
+
+.box {
+    border: solid gray 1px;
+    border-radius: 10px;
+    padding: 2%;
+}
+
+a {
+    color: ghostwhite;
+}
+a:hover {
+    color: aqua;
+}
+
+#userlist {
+    animation-duration: 1s;
+    animation-name: slidein;
+}
+#preloader {
+    margin: 100px;
+    height: 900px;
+}
+
+.sk_bounce {
+    --sk-size: 100px;
+    --sk-color: #FFFFFF;
+}
+
+.sk-bounce-dot {
+    --sk-color: #FFFFFF;
+}
+
+#userlist {
+    display: none;
+}
+
+.nanobar {
+    width: 100%;
+    height: 4px;
+    z-index: 9999;
+    top:0
+}
+.bar {
+    width: 0;
+    height: 100%;
+    transition: height .3s;
+    background:#FFF;
+}
+
+@keyframes slidein {
+    from {
+        margin-right: 0;
+        width: 300%;
+    }
+
+    to {
+        margin-right: 100%;
+        width: 100%;
+    }
+}

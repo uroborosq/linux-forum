@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница регистрации</title>
+    <meta content="Linux, wiki, forum, discussion, question, docs, GNU" name="keywords">
+    <meta content="Ресурс с документацией по GNU\Linux и обсуждением" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="styles/style.css" rel="stylesheet">
+    <script src="scripts/load-header-and-footer.js"></script>
+    <script src="scripts/page_loading_time.js"></script>
+    <script src="scripts/decorate-navbar.js"></script>
+    <script src="scripts/generate-registration-preview.js"></script>
+    <script src="scripts/check-web-storage.js"></script>
+    <script src="scripts/nanobar.min.js"></script>
+    <script src="scripts/preloader-animation.js"></script>
+</head>
+<body>
+    <header></header>
+    <main>
+        <form id="rform">
+            <fieldset>
+                <legend>Введите учетные данные</legend>
+                <p>
+                    <label>Логин</label>
+                    <input type="text" id="rform__input_login">
+                </p>
+                <p>
+                    <label>Email</label>
+                    <input type="text" id="rform__input_email">
+                </p>
+                <p>
+                    <label>Пароль</label>
+                    <input type="password" id="rform__input_pass">
+                </p>
+                <p>
+                    <label>Пароль еще раз</label>
+                    <input type="password" id="rform__input_passconfirm">
+                </p>
+                <p>
+                    <label>Страна</label>
+                    <select id="rform__input_country">
+                        <option>Не выбрано</option>
+                        <option>Казахстан</option>
+                    </select>
+                </p>
+                <p>
+                    <input type="submit" value="Зарегистрироваться">
+                </p>
+                    <p id="rform_errors"></p>
+            </fieldset>
+        </form>
+        <div id="preview"></div>
+    </main>
+    <footer></footer>
+    <script>loadHeaderAndFooter()</script>
+    <script>decorateNavbar()</script>
+    <script>checkWebStorage()
+    <script>applyPreloaderAnimation()</script>
+
+    </script>
+</body>
+</html>
