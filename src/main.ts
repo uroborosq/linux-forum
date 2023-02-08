@@ -8,8 +8,7 @@ async function bootstrap() {
     logger: ['error', 'warn']
   });
   app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
-  app.setViewEngine('hbs');
+
   let port = process.env.PORT;
   if (port === undefined) {
     port = "3000"
