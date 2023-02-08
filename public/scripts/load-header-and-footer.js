@@ -4,7 +4,7 @@ function loadHeaderAndFooter() {
     document.getElementsByTagName("header")[0].innerHTML =
         `<div class="top">
     <div class="top__logo">
-        <img src="public/images/pngegg_64.png" alt="logo">
+        <img src="images/pngegg_64.png" alt="logo">
         </div>
     <h1 class="top__name"> 
         UroborosQ Wiki
