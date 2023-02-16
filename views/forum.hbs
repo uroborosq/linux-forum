@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Личный кабинет</title>
+    {{> commonHead }}
+</head>
+<body>
+<header> {{> header }} </header>
+<main>
+    <div class="box">
+    <h2 class="boxheader">Страница форумов</h2>
+    <div class="box">
+        <h3 class="boxheader">Темы</h3>
+          {{#each topics}}
+            <div>{{this}}</div>
+          {{/each}}
+    </div>
+    </div>
+</main>
+<footer> {{> footer }} </footer>
+<script>decorateNavbar()</script>
+<script>applyPreloaderAnimation()</script>
+</body>
+</html>
+

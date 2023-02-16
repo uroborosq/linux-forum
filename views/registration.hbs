@@ -1,22 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
     <title>Страница регистрации</title>
-    <meta content="Linux, wiki, forum, discussion, question, docs, GNU" name="keywords">
-    <meta content="Ресурс с документацией по GNU\Linux и обсуждением" name="description">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="styles/style.css" rel="stylesheet">
-    <script src="scripts/load-header-and-footer.js"></script>
-    <script src="scripts/page_loading_time.js"></script>
-    <script src="scripts/decorate-navbar.js"></script>
+    {{> commonHead }}
     <script src="scripts/generate-registration-preview.js"></script>
-    <script src="scripts/check-web-storage.js"></script>
-    <script src="scripts/nanobar.min.js"></script>
-    <script src="scripts/preloader-animation.js"></script>
 </head>
 <body>
-    <header></header>
+    <header> {{> header }} </header>
     <main>
         <form id="rform">
             <fieldset>
@@ -52,12 +42,8 @@
         </form>
         <div id="preview"></div>
     </main>
-    <footer></footer>
-    <script>loadHeaderAndFooter()</script>
+    <footer> {{> footer }} </footer>
     <script>decorateNavbar()</script>
-    <script>checkWebStorage()
-    <script>applyPreloaderAnimation()</script>
-
-    </script>
+    <script>checkWebStorage()</script>
 </body>
 </html>

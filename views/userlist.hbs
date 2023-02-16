@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Список пользователей</title>
+  {{>commonHead}}
+  <script src="scripts/fetch-users.js"></script>
+</head>
+<body>
+  <header>{{>header}}</header>
+  <main>
+    <div id="preloader">
+      <div class="sk-bounce sk-center">
+        <div class="sk-bounce-dot"></div>
+        <div class="sk-bounce-dot"></div>
+      </div>
+    </div>
+    <div class="box" id="userlist"></div>
+  </main>
+  <footer>{{>footer}}</footer>
+  <script>decorateNavbar()</script>
+  <script>applyPreloaderAnimation()</script>
+</body>
+</html>

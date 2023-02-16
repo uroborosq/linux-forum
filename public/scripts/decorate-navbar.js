@@ -6,10 +6,10 @@ function decorateNavbar() {
                 case "index.html":
                     element = document.getElementById("top__navbar_main")
                     break
-                case "wiki.html":
+                case "wiki.hbs":
                     element = document.getElementById("top__navbar_wiki")
                     break
-                case "forum.html":
+                case "forum.hbs":
                     element = document.getElementById("top__navbar_forum")
                     break
                 case "lc.html":

@@ -8,6 +8,11 @@ async function bootstrap() {
     logger: ['error', 'warn']
   });
   app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
+
+  const hbs = require('hbs')
+  hbs.registerPartials(join(__dirname, "..", "views/partials"))
 
   let port = process.env.PORT;
   if (port === undefined) {

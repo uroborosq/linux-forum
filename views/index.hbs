@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>Linux Вики и форум</title>
+  {{> commonHead }}
+</head>
+<body>
+<header> {{> header }} </header>
+<main>
+  <div class="box" id="mainpage">
+    <div class="information">
+      <div class="information__introduction">
+        <section>
+          <h2>
+
+            Добро пожаловать на UroborosQ Wiki
+          </h2>
+        </section>
+      </div>
+      <section class="information__sections">
+        <h3>Разделы</h3>
+        <ol>
+          <li>
+            Информация по использованию
+            <ul>
+              <li>Гайд по установке разных дистрибутивов</li>
+              <li>Общие рекомендации</li>
+              <li>Часто задаваемые вопросы</li>
+              <li>Популярные приложения</li>
+            </ul>
+          </li>
+          <li>
+            Сообщество
+            <ul>
+              <li>Правила форума</li>
+              <li>Модерация</li>
+            </ul>
+          </li>
+          <li>
+            Взаимодействие с вики
+            <ul>
+              <li>Чтение</li>
+              <li>Поиск</li>
+              <li>Вклад</li>
+              <li>Редактирование</li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+      <article class="information__aboutwiki">
+        <h3>О чем эта вики?</h3>
+        <p>
+          <ins><b>Linux</b></ins>
+          - ядро операционной системы, составляющее основу операционных систем семейства
+          <del>Linux</del>
+          GNU/Linux, а также ряда операционных систем для мобильных устройств, в том числе Android.
+        </p>
+        <p>
+          <ins><b>Проект GNU</b></ins>
+          - проект по разработке свободного программного обеспечения (СПО), является результатом
+          сотрудничества
+          множества
+          отдельных проектов
+        </p>
+        <p>
+          <ins><b>Дистрибутив GNU/Linux</b></ins>
+          — общее определение операционных систем, использующих ядро Linux, готовых для конечной установки на
+          пользовательское оборудование.
+        </p>
+      </article>
+    </div>
+    <div class="news">
+      <h4>Новости</h4>
+      <div class="news__list">
+        {{#each news}}
+          <div>{{this}}</div>
+          {{/each}}
+      </div>
+    </div>
+  </div>
+</main>
+<footer> {{> footer }} </footer>
+<script>decorateNavbar()</script>
+<script>applyPreloaderAnimation()</script>
+</body>
+</html>

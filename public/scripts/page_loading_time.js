@@ -5,9 +5,9 @@
     function calculateLoadTime()
     {
         let current = new Date().getTime();
-        let loadTime = (current - start) / 1000
+        let loadTime = (current - start)
         let statsObject = document.getElementById("interestingstats")
-        statsObject.innerText = "Загрузка страницы заняла " + loadTime + "сек"
+        statsObject.innerText += ` + ${loadTime}ms (клиент)`
     }
 
     window.addEventListener("DOMContentLoaded", _ => {calculateLoadTime()})

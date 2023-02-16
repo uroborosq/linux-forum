@@ -2,19 +2,10 @@
 <html lang="ru">
 <head>
     <title>UroborosQ Wiki page</title>
-    <meta charset="utf-8">
-    <meta content="Linux, wiki, forum, discussion, question, docs, GNU" name="keywords">
-    <meta content="Ресурс с документацией по GNU\Linux и обсуждением" name="description">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="styles/style.css" rel="stylesheet">
-    <script src="scripts/load-header-and-footer.js"></script>
-    <script src="scripts/page_loading_time.js"></script>
-    <script src="scripts/decorate-navbar.js"></script>
-    <script src="scripts/nanobar.min.js"></script>
-    <script src="scripts/preloader-animation.js"></script>
+    {{>commonHead}}
 </head>
 <body>
-<header></header>
+<header>{{>header}}</header>
 <main>
     <div class="box">
     <h2>Страница Вики</h2>
@@ -25,7 +16,7 @@
                 <li><a href="">Frameworks</a></li>
                 <li><a href="">IDEs</a></li>
                 <li><a href="">Системы журналирования</a></li>
-                <li><a href="">Языки программирования</a></a></li>
+                <li><a href="">Языки программирования</a></li>
                 <li><a href="">Текстовые редакторы</a></li>
                 <li><a href="">Системы контроля версий</a></li>
             </ol>
@@ -60,10 +51,8 @@
     </article>
     </div>
 </main>
-<footer></footer>
+<footer>{{>footer}}</footer>
 <script>applyPreloaderAnimation()</script>
-
-<script>loadHeaderAndFooter()</script>
 <script>decorateNavbar()</script>
 </body>
 </html>
