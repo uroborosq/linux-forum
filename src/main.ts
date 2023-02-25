@@ -1,9 +1,13 @@
 import { NestFactory } from '@nestjs/core';
+import { PrismaClient } from '@prisma/client'
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as process from "process";
 import {join} from 'path';
 async function bootstrap() {
+  const prisma = new PrismaClient()
+  let smth = await prisma.user.findMany()
+  console.log(smth)
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: ['error', 'warn']
   });
