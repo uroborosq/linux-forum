@@ -8,14 +8,15 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  email     String    @unique
   name      String?
-  role      Role     @default(USER)
+  role      Role      @default(USER)
   posts     Post[]
   country   String?
   Topic     Topic[]
+  articles  Article[]
 }
 
 model Post {
@@ -28,6 +29,7 @@ model Post {
   authorId  Int?
   Topic     Topic    @relation(fields: [topicId], references: [id])
   topicId   Int
+  text      String
 }
 
 model Topic {
@@ -41,4 +43,21 @@ model Topic {
 enum Role {
   USER
   ADMIN
+}
+
+model Article {
+  id             Int             @id @default(autoincrement())
+  title          String
+  mainterners    User[]
+  mainternersIds Int[]
+  text           String
+  category       ArticleCategory @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+}
+
+model ArticleCategory {
+  id       Int       @id @default(autoincrement())
+  name     String
+  parentId Int
+  articles Article[]
 }
