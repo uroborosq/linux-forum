@@ -13,7 +13,7 @@
   "scripts": {
     "build": "nest build; npm install --prefix=public; npm run postinstall --prefix=public",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "prisma generate; nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -28,6 +28,8 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.2.1",
+    "@nestjs/cli": "^9.0.0",
     "@prisma/client": "^4.10.1",
     "hbs": "^4.2.0",
     "pg": "^8.9.0",

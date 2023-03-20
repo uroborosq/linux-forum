@@ -13,18 +13,17 @@ model User {
   email     String    @unique
   name      String?
   role      Role      @default(USER)
-  posts     Post[]
+  posts     Reply[]
   country   String?
   Topic     Topic[]
   articles  Article[]
 }
 
-model Post {
+model Reply {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   published Boolean  @default(false)
-  title     String
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
   Topic     Topic    @relation(fields: [topicId], references: [id])
@@ -37,7 +36,7 @@ model Topic {
   description String?
   author      User?   @relation(fields: [authorId], references: [id])
   authorId    Int
-  Post        Post[]
+  Post        Reply[]
 }
 
 enum Role {
@@ -47,7 +46,7 @@ enum Role {
 
 model Article {
   id             Int             @id @default(autoincrement())
-  title          String
+  title          String          @unique
   mainterners    User[]
   mainternersIds Int[]
   text           String

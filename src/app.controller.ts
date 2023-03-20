@@ -1,9 +1,9 @@
 import { Controller, Get, Render, UseInterceptors } from "@nestjs/common";
 import { AppService } from './app.service';
-import { LoadingTime } from "./interceptors/loading.time";
+import { AppInterceptor } from "./app.interceptor";
 
 @Controller()
-@UseInterceptors(LoadingTime)
+@UseInterceptors(AppInterceptor)
 export class AppController {
   constructor(private readonly appService: AppService) {
   }
