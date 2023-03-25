@@ -3,7 +3,7 @@ body {
     color: ghostwhite;
     font-size: 15px;
     line-height: normal;
-    font-family: "Source Code Pro", serif;
+    font-family: "Source Code Pro", "Consolas", "Noto Sans Mono", "monospace", serif;
     /*font-weight: normal;*/
 }
 

@@ -27,7 +27,7 @@ export class ArticleController {
   })
   @ApiResponse({
     status: 200,
-    description: "Article exist and can be received"
+    description: "Article exists and can be received"
   })
   @ApiResponse({
     status: 403,

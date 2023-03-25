@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class InputCategoryDto{
+export class ReplyDto {
   @ApiProperty()
-  name: string
+  text: string
   @ApiProperty()
-  parentId: number
+  topicId: number
 }

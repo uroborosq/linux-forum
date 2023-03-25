@@ -11,7 +11,7 @@ model User {
   id        Int       @id @default(autoincrement())
   createdAt DateTime  @default(now())
   email     String    @unique
-  name      String?
+  name      String    @unique
   role      Role      @default(USER)
   posts     Reply[]
   country   String?
@@ -23,9 +23,8 @@ model Reply {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  published Boolean  @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
   Topic     Topic    @relation(fields: [topicId], references: [id])
   topicId   Int
   text      String
