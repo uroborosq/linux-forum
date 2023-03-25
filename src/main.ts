@@ -15,7 +15,6 @@ async function bootstrap() {
     .setTitle('Linux forum API')
     .setDescription('The description of Linux forum backend API')
     .setVersion('0.0.1')
-    .addTag('forum')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
