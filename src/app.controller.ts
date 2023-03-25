@@ -1,6 +1,8 @@
 import { Controller, Get, Render, UseInterceptors } from "@nestjs/common";
 import { AppService } from './app.service';
 import { AppInterceptor } from "./app.interceptor";
+import { ApiExcludeController } from "@nestjs/swagger";
+@ApiExcludeController()
 
 @Controller()
 @UseInterceptors(AppInterceptor)
