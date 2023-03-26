@@ -1,8 +1,8 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class InputCategoryDto{
-  @ApiProperty()
-  name: string
-  @ApiProperty()
-  parentId: number
+	@ApiProperty()
+		name: string;
+	@ApiProperty()
+		parentId: number;
 }
