@@ -8,22 +8,23 @@ generator client {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  email     String    @unique
-  name      String    @unique
-  role      Role      @default(USER)
+  id        Int              @id @default(autoincrement())
+  createdAt DateTime         @default(now())
+  email     String           @unique
+  name      String           @unique
+  role      Role             @default(USER)
   posts     Reply[]
   country   String?
   Topic     Topic[]
   articles  UserOnArticles[]
+  news      NewsArticle[]
 }
 
 model Reply {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  author    User    @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
   Topic     Topic    @relation(fields: [topicId], references: [id])
   topicId   Int
@@ -44,12 +45,12 @@ enum Role {
 }
 
 model Article {
-  id             Int             @id @default(autoincrement())
-  title          String          @unique
-  mainterners    UserOnArticles[]
-  text           String
-  category       ArticleCategory @relation(fields: [categoryId], references: [id])
-  categoryId     Int
+  id          Int              @id @default(autoincrement())
+  title       String           @unique
+  mainterners UserOnArticles[]
+  text        String
+  category    ArticleCategory  @relation(fields: [categoryId], references: [id])
+  categoryId  Int
 }
 
 model ArticleCategory {
@@ -60,16 +61,18 @@ model ArticleCategory {
 }
 
 model NewsArticle {
-  id Int @id @default(autoincrement())
-  title String
+  id          Int      @id @default(autoincrement())
+  title       String
   publishedAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
 }
 
 model UserOnArticles {
-  user User @relation(fields: [userId], references: [id])
-  userId Int
-  article Article @relation(fields: [articleId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  article   Article @relation(fields: [articleId], references: [id])
   articleId Int
 
   @@id([userId, articleId])
