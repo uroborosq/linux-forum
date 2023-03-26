@@ -5,9 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as process from 'process';
 import { join } from 'path';
-
-import hbs from 'hbs';
-
+import * as hbs from 'hbs'
 async function bootstrap() {
 	console.log('Linux forum server started');
 	const prisma = new PrismaClient();
@@ -24,7 +22,7 @@ async function bootstrap() {
 	app.useStaticAssets(join(__dirname, '..', 'public'));
 	app.setBaseViewsDir(join(__dirname, '..', 'views'));
 	app.setViewEngine('hbs');
-	hbs.registerPartials(join(__dirname, '..', 'views/partials'));
+	hbs.registerPartials(join(__dirname, '..', 'views', 'partials'));
 
 	let port = process.env.PORT;
 	if (port === undefined) {
