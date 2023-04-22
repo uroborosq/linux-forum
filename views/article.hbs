@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>{{articleName}}</title>
+    {{>commonHead}}
+    <script src="/scripts/article-edit.js"></script>
+</head>
+
+<header>{{>header}}</header>
+
+<body>
+    <div class="box">
+        <h2>{{articleName}}</h2>
+        {{{replaceNewlines articleText}}}
+        <p>
+            {{{button}}}
+        </p>
+        <form id="article__form">
+            <fieldset>
+                <legend>Редактировать статью</legend>
+                <p>
+                    <label for="article_title">Название статьи:</label>
+                    <input type="text" id="article_title" name="article-title">
+                </p>
+                <p>
+                    <label for="article_category">ID категории:</label>
+                    <input type="text" id="article_category" name="article-category">
+                </p>
+                <p>
+                    <label for="article_text">Текст статьи:</label>
+                    <textarea id="article_text" name="article-text"></textarea>
+                </p>
+            </fieldset>
+            <button class="form__button" type="button" onclick="updateArticle({{articleID}})">Отправить</button>
+            <button class="form__button" type="button" onclick="hideForm()">Закрыть</button>
+            <button class="form__button" type="button" onclick="deleteArticle({{articleID}}, {{categoryID}})">Удалить статью</button>
+        </form>
+    </div>
+</body>
+<footer>{{>footer}}</footer>
+
+</html>

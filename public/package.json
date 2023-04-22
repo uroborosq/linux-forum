@@ -13,7 +13,8 @@
     }
   },
   "dependencies": {
-    "frontend-dependencies": "^2.0.0"
+    "frontend-dependencies": "^2.0.0",
+    "supertokens-web-js": "^0.5.0"
   },
   "scripts": {
     "postinstall": "node ./node_modules/frontend-dependencies/index.js"

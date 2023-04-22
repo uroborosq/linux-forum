@@ -3,35 +3,22 @@
 <head>
     <title>Title</title>
     {{> commonHead }}
+  <script src="https://cdn.jsdelivr.net/gh/supertokens/supertokens-web-js/bundle/website.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/supertokens/supertokens-web-js/bundle/supertokens.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/supertokens/supertokens-web-js/bundle/session.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/supertokens/supertokens-web-js/bundle/thirdparty.js"></script>
+  <script src="/scripts/auth.js"></script>
 </head>
 <body>
 <header> {{> header }} </header>
 <main>
     <div class="box" id="authorization">
         <h2 id="authorization__label">
-            Авторизация
+            Личная кабинка
         </h2>
-        <form>
-            <fieldset>
-                <legend>Введите учетные данные</legend>
                 <p>
-                    <label>Логин</label>
-                    <input type="text">
+                  {{{ button }}}
                 </p>
-                <p>
-                    <label>Пароль</label>
-                    <input type="password">
-                </p>
-                <p>
-                    <label>Запомнить меня<input type="checkbox" value="Запомнить меня"></label>
-                </p>
-                <p>
-                    <input type="submit" value="Войти">
-                    <input type="button" value="Зарегистрироваться" onclick="location.href='registration.html';">
-                    <input type="submit" value="Забыли пароль?">
-                </p>
-            </fieldset>
-        </form>
     </div>
 </main>
 <footer>{{>footer}}</footer>

@@ -16,9 +16,13 @@
       </div>
     </div>
     <div class="box" id="userlist"></div>
+    <p><input value="Предыдущая страница" type="button" onclick="renderUsers(currentPage - 1)"> <span id="pagenumber">1</span> <input value="Следующая страница" type="button" onclick="renderUsers(currentPage + 1)"></p>
+
   </main>
   <footer>{{>footer}}</footer>
   <script>decorateNavbar()</script>
   <script>applyPreloaderAnimation()</script>
+  <script>renderUsers(1)</script>
+
 </body>
 </html>

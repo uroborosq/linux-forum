@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <title>{{categoryName}}</title>
+    {{>commonHead}}
+    <script src="/scripts/edit-category.js"></script>
+</head>
+<header>
+    {{>header}}
+</header>
+
+<body>
+    <div class="box">
+        <h2>{{categoryName}}</h2>
+        {{#if articles}}
+        {{#each articles}}
+        <div class="article_item"><a href="/article-{{this.id}}"><u>{{this.title}}</u></a></div>
+        {{/each}}
+        {{/if}}
+        {{#unless articles}}
+        Здесь пока ничего нема
+        {{/unless}}
+        <p>
+            {{{buttons}}}
+        </p>
+        <form id="category__form">
+            <fieldset>
+                <legend>Редактировать категорию</legend>
+                <p>
+                    <label for="category_title">Название категории:</label>
+                    <input type="text" id="category_title" name="category-title">
+                </p>
+                <p>
+                    <label for="category_category">ID родительской категории:</label>
+                    <input type="text" id="category_parent" name="category-parent">
+                </p>
+                <button class="form__button" type="button" onclick="updateCategory({{categoryID}})">Отправить</button>
+                <button class="form__button" type="button" onclick="hideForm()">Закрыть</button>
+                <button class="form__button" type="button" onclick="deleteCategory({{categoryID}})">Удалить категорию</button>`;
+            </fieldset>
+
+
+
+    </div>
+</body>
+<footer>{{>footer}}</footer>
+
+</html>

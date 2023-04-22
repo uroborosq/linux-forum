@@ -1,160 +1,106 @@
-import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiCookieAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
 	Body,
 	Controller,
 	Delete,
-	Get,
-	HttpException,
-	NotImplementedException,
+	Get, HttpException,
 	Param,
 	Patch,
-	Post
+	Post,
+	UseFilters,
+	UseGuards
 } from '@nestjs/common';
-import { Article } from '@prisma/client';
-import { throwIfEmpty } from 'rxjs';
+import { Article, Role } from '@prisma/client';
 import { InputArticleDto } from './article.dto';
+import { ArticleService } from './article.service';
+import { PrismaKnownRequestFilter, PrismaValidationErrorFilter } from 'src/prisma-exception-filter/prisma-known-request.filter';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { SessionContainer } from 'supertokens-node/recipe/session';
+import { Session } from 'src/auth/session.decorator';
+import { UserService } from '../user/user.service';
 
 @ApiTags('articles')
-@Controller('controllers')
+@Controller('articles')
 export class ArticleController {
+	constructor(private readonly articleService: ArticleService, private readonly userService: UserService){}
 	@Get(':articleId')
-	@ApiOperation({
-		summary: 'Get article by id'
-	})
-	@ApiParam({
-		name: 'articleId',
-		type: 'int'
-	})
-	@ApiResponse({
-		status: 200,
-		description: 'Article exists and can be received'
-	})
-	@ApiResponse({
-		status: 403,
-		description: 'User is not allowed to view this article'
-	})
-	@ApiResponse({
-		status: 404,
-		description: 'Article with such id doesn\'t exist'
-	})
-	@ApiResponse({
-		status: 500,
-		description: 'Internal error'
-	})
+	@ApiOperation({ summary: 'Get article by id' })
+	@ApiResponse({ status: 200, description: 'Article exists and can be received' })
+	@ApiResponse({ status: 403, description: 'User is not allowed to view this article' })
+	@ApiResponse({ status: 404, description: 'Article with such id doesn\'t exist' })
+	@ApiResponse({ status: 500, description: 'Internal error' })
+	@UseFilters(PrismaKnownRequestFilter)
+	@UseFilters(PrismaValidationErrorFilter)
 	async getArticle(@Param('articleId') articleId: number): Promise<Article> {
-		throw new HttpException('Not Implemented', 501);
+		const article = await this.articleService.getById(articleId);
+		if (article == undefined) {
+			throw new HttpException('Not Found', 404);
+		}
+		return article;
 	}
 
-	@Post()
-	@ApiOperation({
-		summary: 'Create a new article'
-	})
-	@ApiBody({
-		type: InputArticleDto
-	})
-	@ApiResponse({
-		status: 200,
-		description: 'Article created successfully'
-	})
-	@ApiResponse({
-		status: 403,
-		description: 'User is not allowed to create articles'
-	})
-	@ApiResponse({
-		status: 400,
-		description: 'Request contains invalid data'
-	})
-	@ApiResponse({
-		status: 500,
-		description: 'Internal error'
-	})
-	async createArticle(@Body() article: Article) {
-		throw new HttpException('Not implemented', 501);
+	@Get('/category/:categoryId')
+	@ApiOperation({summary: 'Get articles by categoryId'})
+	@ApiResponse({ status: 200, description: 'Article exists and can be received' })
+	@ApiResponse({ status: 403, description: 'User is not allowed to view this article' })
+	@ApiResponse({ status: 404, description: 'Article with such id doesn\'t exist' })
+	@ApiResponse({ status: 500, description: 'Internal error' })
+	@UseFilters(PrismaKnownRequestFilter)
+	@UseFilters(PrismaValidationErrorFilter)
+	async getArticleByCategoryId(@Param('articleId') articleId: number): Promise<Article[]> {
+		return this.articleService.getByCategoryId(articleId);
+	}
+
+	@Post('')
+	@ApiOperation({ summary: 'Create a new article' })
+	@ApiBody({ type: InputArticleDto })
+	@ApiResponse({ status: 200, description: 'Article created successfully' })
+	@ApiResponse({ status: 403, description: 'User is not allowed to create articles' })
+	@ApiResponse({ status: 400, description: 'Request contains invalid data' })
+	@ApiResponse({ status: 500, description: 'Internal error' })
+	@UseFilters(PrismaKnownRequestFilter)
+	@UseFilters(PrismaValidationErrorFilter)
+	@UseGuards(new AuthGuard())
+	@ApiCookieAuth()
+	async createArticle(@Session() session: SessionContainer, @Body() article: InputArticleDto) {
+		if (await this.userService.getUserRole(session.getUserId()) != Role.ADMIN) {
+			throw new HttpException('Only admins can create articles', 403);
+		}
+		return this.articleService.createArticle(article);
 	}
 
 	@Delete(':articleId')
-	@ApiOperation({
-		summary: 'Delete article by id'
-	})
-	@ApiParam({
-		name: 'articleId',
-		type: 'int'
-	})
-	@ApiResponse({
-		status: 200,
-		description: 'Article deleted'
-	})
-	@ApiResponse({
-		status: 403,
-		description: 'User is not allowed to delete this article'
-	})
-	@ApiResponse({
-		status: 404,
-		description: 'Article with such id doesn\'t exist'
-	})
-	@ApiResponse({
-		status: 500,
-		description: 'Internal error'
-	})
-	async deleteArticle(@Param('articleId') articleId: number) {
-		throw new HttpException('Not implemented', 501);
+	@ApiOperation({ summary: 'Delete article by id' })
+	@ApiResponse({ status: 200, description: 'Article deleted' })
+	@ApiResponse({ status: 403, description: 'User is not allowed to delete this article' })
+	@ApiResponse({ status: 404, description: 'Article with such id doesn\'t exist' })
+	@ApiResponse({ status: 500, description: 'Internal error' })
+	@UseFilters(PrismaKnownRequestFilter)
+	@UseFilters(PrismaValidationErrorFilter)
+	@UseGuards(new AuthGuard())
+	@ApiCookieAuth()
+	async deleteArticle(@Session() session: SessionContainer, @Param('articleId') articleId: number) {
+		if (await this.userService.getUserRole(session.getUserId()) != Role.ADMIN) {
+			throw new HttpException('Only admins can create articles', 403);
+		}
+		return this.articleService.remove(articleId);
 	}
 
-	@Patch('/text/:articleId')
-	@ApiOperation({
-		summary: 'Edit text of a reply by id'
-	})
-	@ApiParam({
-		name: 'articleId',
-		type: 'int'
-	})
-	@ApiBody({ type: String })
-	@ApiResponse({
-		status: 200,
-		description: 'Article deleted'
-	})
-	@ApiResponse({
-		status: 403,
-		description: 'User is not allowed to delete this article'
-	})
-	@ApiResponse({
-		status: 404,
-		description: 'Article with such id doesn\'t exist'
-	})
-	@ApiResponse({
-		status: 500,
-		description: 'Internal error'
-	})
-	async editText(@Param('articleId') articleId: number, @Body() text: string) {
-		throw new HttpException('Not implemented', 501);
-	}
-
-	@Patch('/metadata/:articleId')
-	@ApiOperation({
-		summary: 'Update metadata such as description, etc of article by id'
-	})
-	@ApiParam({
-		name: 'articleId',
-		type: 'int'
-	})
-	@ApiResponse({
-		status: 200,
-		description: 'Article updated'
-	})
-	@ApiResponse({
-		status: 403,
-		description: 'User is not allowed to update this article'
-	})
-	@ApiResponse({
-		status: 404,
-		description: 'Article with such id doesn\'t exist'
-	})
-	@ApiResponse({
-		status: 500,
-		description: 'Internal error'
-	})
-	async updateMetadata(@Param('articleId') articleId: number, @Body() b: any) {
-		throw new HttpException('Not implemented', 501);
+	@Patch('/:articleId')
+	@ApiOperation({ summary: 'Update metadata such as description, etc of article by id' })
+	@ApiResponse({ status: 200, description: 'Article updated' })
+	@ApiResponse({ status: 403, description: 'User is not allowed to update this article' })
+	@ApiResponse({ status: 404, description: 'Article with such id doesn\'t exist' })
+	@ApiResponse({ status: 500, description: 'Internal error' })
+	@UseFilters(PrismaKnownRequestFilter)
+	@UseFilters(PrismaValidationErrorFilter)
+	@UseGuards(new AuthGuard())
+	@ApiCookieAuth()
+	async updateMetadata(@Session() session: SessionContainer, @Param('articleId') articleId: number, @Body() article: InputArticleDto) {
+		if (await this.userService.getUserRole(session.getUserId()) != Role.ADMIN) {
+			throw new HttpException('Only admins can create articles', 403);
+		}
+		return this.articleService.updateArticle(articleId, article);
 	}
 }
 

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang='ru'>
+
+<head>
+  <title>{{ topicName }}</title>
+  {{>commonHead}}
+  <script src='/scripts/load-replies.js'></script>
+  <script src='/scripts/submit-reply.js'></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <header>{{>header}}</header>
+  <main>
+    <div class='box'>
+      <h2 id='topic_name'>{{topicName}}</h2>
+      <h3 id='topic_description'>{{topicDescription}}</h3>
+      <p>
+        {{{ topicButtons }}}
+      </p>
+      <p>
+      <div id="topic__create">
+        <form>
+          <fieldset>
+            <p>
+              <label class="form__label" for="topic-name">Имя топика:</label>
+              <input class="form__input" id="topic-name" name="topic-name" type="text" placeholder="{{topicName}}" required>
+            </p>
+            <p>
+              <label class="form__label" for="topic-text">Описание топика:</label>
+              <textarea class="form__textarea" id="topic-text" name="topic-text" required>{{topicDescription}}</textarea>
+            </p>
+            <button class="form__button" type="button" onclick="sendTopic({{topicID}})">Отправить</button>
+            <button class="form__button" type="button" onclick="hideForm()">Закрыть</button>
+          </fieldset>
+        </form>
+      </div>
+      </form>
+    </div>
+      </p>
+      <div class='box' id='topic__box'>
+        <div class='topic__replies-table'>
+          {{#each replies}}
+          <div class='reply'>
+            <div class='reply__left'>
+              <div class='reply__author'>{{this.reply.author.name}}</div>
+              <div class='reply__date'>{{compactDate this.reply.updatedAt}}</div>
+            </div>
+            <div class='reply__right'>
+            <div class='reply__text' id="reply__text-{{this.reply.id}}">{{this.reply.text}}</div>
+            {{{this.button}}}
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      <div class='topic__controls'>
+        <div class="topic__controls_page-switcher"><input id='backward_page' value='Предыдущая страница' type='button'
+            onclick='loadReplies(currentPage - 1, {{topicID}})'> <span id='pagenumber'>1</span> <input id='forward_page'
+            value='Следующая страница' type='button' onclick='loadReplies(currentPage + 1, {{topicID}})'>
+        </div>
+
+        {{{sendArea}}}
+      </div>
+    </div>
+
+  </main>
+  <footer>{{>footer}}</footer>
+  <script>decorateNavbar()</script>
+  <script>applyPreloaderAnimation()</script>
+  <script>loadMaxPageNumber({{ topicID }})</script>
+</body>
+
+</html>

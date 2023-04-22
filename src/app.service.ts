@@ -1,19 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class AppService {
-	getLatestNews(n: number): string[] {
-		let minutesLeft = 60;
+export class AppService extends PrismaClient implements OnModuleInit{
+	async onModuleInit() {
+		await this.$connect();
+	}
+	async getLatestNews(n: number) {
+		return this.newsArticle.findMany({
+			take: n,
+			orderBy: {
+				updatedAt: 'desc'
+			},
+			select: {
+				title: true
+			}
+		});
+	}
 
-		if (n > 20) {
-			throw 'Number of news must be lower than 21';
-		}
-		const news = Array<string>();
-		for (let i = 0; i < n; i++) {
-			const rand = Math.floor(Math.random() * minutesLeft);
-			minutesLeft -= rand;
-			news.push(`${60 - minutesLeft} минут назад: подождите, загрузка...`);
-		}
-		return news;
+	async getTopicName(topicId: number) {
+		return this.topic.findUnique({
+			where: {
+				id: topicId
+			},
+			select: {
+				title: true
+			}
+		});
 	}
 }

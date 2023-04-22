@@ -1,58 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <title>UroborosQ Wiki page</title>
     {{>commonHead}}
+    <script src="/scripts/load-categories.js"></script>
+    <script src="/scripts/create-article.js"></script>
 </head>
+
 <body>
-<header>{{>header}}</header>
-<main>
-    <div class="box">
-    <h2>Страница Вики</h2>
-    <article id="wikiguide">
-        <ol>
-            <li>Разработка</li>
-            <ol>
-                <li><a href="">Frameworks</a></li>
-                <li><a href="">IDEs</a></li>
-                <li><a href="">Системы журналирования</a></li>
-                <li><a href="">Языки программирования</a></li>
-                <li><a href="">Текстовые редакторы</a></li>
-                <li><a href="">Системы контроля версий</a></li>
-            </ol>
-            <li><a href="">Оборудование</a></li>
-            <ol>
-                <li><a href="">Bluetooth</a></li>
-                <li><a href="">CPU</a></li>
-                <li><a href="">Мониторы</a></li>
-                <li><a href="">Графика</a></li>
-                <li><a href="">Автоматическое определения оборудование и решение проблем</a></li>
-                <li><a href="">Ввод</a></li>
-                <ol>
-                    <li><a href="">Клавиатуры</a></li>
-                    <li><a href="">Мыши</a></li>
-                    <li><a href="">Другое</a></li>
-                </ol>
-                <li><a href="">Ноутбуки</a></li>
-                <li><a href="">Материнские платы и BIOS</a></li>
-                <li><a href="">Мобильные устройства</a></li>
-            </ol>
-            <li><a href="">Списки программного обеспечения</a></li>
-            <li><a href="">Сеть</a></li>
-            <ol>
-                <li><a href="">DNS</a></li>
-                <li><a href="">Распределенные вычисления</a></li>
-                <li><a href="">Email</a></li>
-                <li><a href="">Файерволлы</a></li>
-                <li><a href="">Модемы</a></li>
-                <li><a href="">Настройка сети</a></li>
-            </ol>
-        </ol>
-    </article>
-    </div>
-</main>
-<footer>{{>footer}}</footer>
-<script>applyPreloaderAnimation()</script>
-<script>decorateNavbar()</script>
+    <header>{{>header}}</header>
+    <main>
+        <div class="box">
+            <h2>Страница Вики</h2>
+            <article id="wikiguide">
+                Зогрузка...
+            </article>
+            <div id="wiki__createarea">
+                {{{createButton}}}
+            </div>
+            <div id="wiki__createcategory">
+                {{{createCategory}}}
+            </div>
+        </div>
+    </main>
+    <footer>{{>footer}}</footer>
+    <script>applyPreloaderAnimation()</script>
+    <script>decorateNavbar()</script>
+    <script>loadCategories()</script>
 </body>
 </html>

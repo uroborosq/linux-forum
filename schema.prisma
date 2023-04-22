@@ -8,7 +8,7 @@ generator client {
 }
 
 model User {
-  id        Int              @id @default(autoincrement())
+  id        String           @id
   createdAt DateTime         @default(now())
   email     String           @unique
   name      String           @unique
@@ -16,7 +16,6 @@ model User {
   posts     Reply[]
   country   String?
   Topic     Topic[]
-  articles  UserOnArticles[]
   news      NewsArticle[]
 }
 
@@ -25,7 +24,7 @@ model Reply {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
+  authorId  String
   Topic     Topic    @relation(fields: [topicId], references: [id])
   topicId   Int
   text      String
@@ -33,9 +32,11 @@ model Reply {
 
 model Topic {
   id          Int     @id @default(autoincrement())
+  title       String
   description String?
   author      User?   @relation(fields: [authorId], references: [id])
-  authorId    Int
+  authorId    String
+  updatedAt   DateTime @default(now())
   Post        Reply[]
 }
 
@@ -47,7 +48,6 @@ enum Role {
 model Article {
   id          Int              @id @default(autoincrement())
   title       String           @unique
-  mainterners UserOnArticles[]
   text        String
   category    ArticleCategory  @relation(fields: [categoryId], references: [id])
   categoryId  Int
@@ -66,14 +66,6 @@ model NewsArticle {
   publishedAt DateTime @default(now())
   updatedAt   DateTime @default(now())
   author      User     @relation(fields: [authorId], references: [id])
-  authorId    Int
-}
-
-model UserOnArticles {
-  user      User    @relation(fields: [userId], references: [id])
-  userId    Int
-  article   Article @relation(fields: [articleId], references: [id])
-  articleId Int
-
-  @@id([userId, articleId])
+  authorId    String
+  text        String
 }

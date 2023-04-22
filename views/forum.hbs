@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <title>Личный кабинет</title>
     {{> commonHead }}
+    <script src="/scripts/load-topics.js"></script>
 </head>
-<body>
-<header> {{> header }} </header>
-<main>
-    <div class="box">
-    <h2 class="boxheader">Страница форумов</h2>
-    <div class="box">
-        <h3 class="boxheader">Темы</h3>
-          {{#each topics}}
-            <div>{{this}}</div>
-          {{/each}}
-    </div>
-    </div>
-</main>
-<footer> {{> footer }} </footer>
-<script>decorateNavbar()</script>
-<script>applyPreloaderAnimation()</script>
-</body>
-</html>
 
+<body>
+    <header> {{> header }} </header>
+    <main>
+        <div class="box">
+            <h2 class="boxheader">Страница форумов</h2>
+            <div id="topics" class="box">
+                <h3 class="boxheader">Темы</h3>
+            </div>
+            <p>
+                {{{createButton}}}
+            </p>
+            <div id="forum__create">
+                <form>
+                <fieldset>
+                    <p>
+                        <label class="form__label" for="topic-name">Имя топика:</label>
+                        <input class="form__input" id="topic-name" name="topic-name" type="text" required>
+                    </p>
+                    <p>
+                        <label class="form__label" for="topic-text">Описание топика:</label>
+                        <textarea class="form__textarea" id="topic-text" name="topic-text" required></textarea>
+                    </p>
+                    <button class="form__button" type="button" onclick="sendTopic()">Отправить</button>
+                    <button class="form__button" type="button" onclick="hideForm()">Закрыть</button>
+
+                </fieldset>
+                </form>
+                </div>
+
+        </div>
+        <p><input value="Предыдущая страница" type="button" onclick="changePage(currentPage - 1)"> <span
+                id="pagenumber"> 1 </span> <input value="Следующая страница" type="button"
+                onclick="changePage(currentPage + 1)"></p>
+    </main>
+    <footer> {{> footer }} </footer>
+    <script>decorateNavbar()</script>
+    <script>applyPreloaderAnimation()</script>
+    <script>changePage(1)</script>
+</body>
+
+</html>
