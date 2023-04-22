@@ -75,4 +75,13 @@ export class UserService extends PrismaClient implements OnModuleInit{
 			}
 		});
 	}
+
+	async getPageNumber() {
+		const replies = await this.user.aggregate({
+			_count: {
+				id: true
+			},
+		});
+		return Math.ceil(Number(replies._count.id) / 25);
+	}
 }

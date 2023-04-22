@@ -87,4 +87,11 @@ export class UserController {
 	async getPage(@Param('pageNumber') pageNumber: number): Promise<User[]> {
 		return this.userService.getPage(pageNumber);
 	}
+
+	@Get('/pages')
+	@UseFilters(PrismaKnownRequestFilter)
+	@UseFilters(PrismaValidationErrorFilter)
+	async getNumberOfPages() {
+		return this.getNumberOfPages();
+	}
 }
