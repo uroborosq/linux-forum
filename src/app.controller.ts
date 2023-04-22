@@ -42,7 +42,7 @@ export class AppController {
 			loggedUser = (await this.userService.getUser(session.getUserId())).name;
 		}
 		return {
-			news: this.appService.getLatestNews(1),
+			news: '',
 			authorizationStatus: loggedUser,
 		};
 	}
@@ -55,7 +55,7 @@ export class AppController {
 			loggedUser = (await this.userService.getUser(session.getUserId())).name;
 		}
 		return {
-			news: this.appService.getLatestNews(1),
+			news: '',
 			authorizationStatus: loggedUser,
 		};
 	}
