@@ -1,4 +1,4 @@
-import { ApiBody, ApiCookieAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiCookieAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import {
 	Body,
 	Controller,
@@ -9,15 +9,15 @@ import {
 	Post,
 	UseFilters,
 	UseGuards
-} from '@nestjs/common';
-import { Article, Role } from '@prisma/client';
-import { InputArticleDto } from './article.dto';
-import { ArticleService } from './article.service';
-import { PrismaKnownRequestFilter, PrismaValidationErrorFilter } from 'src/prisma-exception-filter/prisma-known-request.filter';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { SessionContainer } from 'supertokens-node/recipe/session';
-import { Session } from 'src/auth/session.decorator';
-import { UserService } from '../user/user.service';
+} from '@nestjs/common'
+import { Article, Role } from '@prisma/client'
+import { InputArticleDto } from './article.dto'
+import { ArticleService } from './article.service'
+import { PrismaKnownRequestFilter, PrismaValidationErrorFilter } from 'src/prisma-exception-filter/prisma-known-request.filter'
+import { AuthGuard } from 'src/auth/auth.guard'
+import { SessionContainer } from 'supertokens-node/recipe/session'
+import { Session } from 'src/auth/session.decorator'
+import { UserService } from '../user/user.service'
 
 @ApiTags('articles')
 @Controller('articles')
@@ -32,11 +32,11 @@ export class ArticleController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async getArticle(@Param('articleId') articleId: number): Promise<Article> {
-		const article = await this.articleService.getById(articleId);
+		const article = await this.articleService.getById(articleId)
 		if (article == undefined) {
-			throw new HttpException('Not Found', 404);
+			throw new HttpException('Not Found', 404)
 		}
-		return article;
+		return article
 	}
 
 	@Get('/category/:categoryId')
@@ -48,7 +48,7 @@ export class ArticleController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async getArticleByCategoryId(@Param('articleId') articleId: number): Promise<Article[]> {
-		return this.articleService.getByCategoryId(articleId);
+		return this.articleService.getByCategoryId(articleId)
 	}
 
 	@Post('')
@@ -64,9 +64,9 @@ export class ArticleController {
 	@ApiCookieAuth()
 	async createArticle(@Session() session: SessionContainer, @Body() article: InputArticleDto) {
 		if (await this.userService.getUserRole(session.getUserId()) != Role.ADMIN) {
-			throw new HttpException('Only admins can create articles', 403);
+			throw new HttpException('Only admins can create articles', 403)
 		}
-		return this.articleService.createArticle(article);
+		return this.articleService.createArticle(article)
 	}
 
 	@Delete(':articleId')
@@ -81,9 +81,9 @@ export class ArticleController {
 	@ApiCookieAuth()
 	async deleteArticle(@Session() session: SessionContainer, @Param('articleId') articleId: number) {
 		if (await this.userService.getUserRole(session.getUserId()) != Role.ADMIN) {
-			throw new HttpException('Only admins can create articles', 403);
+			throw new HttpException('Only admins can create articles', 403)
 		}
-		return this.articleService.remove(articleId);
+		return this.articleService.remove(articleId)
 	}
 
 	@Patch('/:articleId')
@@ -98,9 +98,9 @@ export class ArticleController {
 	@ApiCookieAuth()
 	async updateMetadata(@Session() session: SessionContainer, @Param('articleId') articleId: number, @Body() article: InputArticleDto) {
 		if (await this.userService.getUserRole(session.getUserId()) != Role.ADMIN) {
-			throw new HttpException('Only admins can create articles', 403);
+			throw new HttpException('Only admins can create articles', 403)
 		}
-		return this.articleService.updateArticle(articleId, article);
+		return this.articleService.updateArticle(articleId, article)
 	}
 }
 

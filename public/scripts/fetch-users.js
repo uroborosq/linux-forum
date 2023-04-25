@@ -35,6 +35,8 @@ async function renderUsers(pageNumber) {
 		let preload = document.getElementById('preloader');
 		preload.style.display = 'none';
 		userList.style.display = 'block';
+		await checkPagesNumber();
+
 	} catch (e) {
 		let userList = document.getElementById('userlist');
 		userList.innerText = '⚠ Что-то пошло не так';
@@ -42,5 +44,27 @@ async function renderUsers(pageNumber) {
 		let preload = document.getElementById('preloader');
 		preload.style.display = 'none';
 		userList.style.display = 'block';
+	}
+}
+
+
+async function loadMaxPageNumber(topicId) {
+	const response = await fetch('/users/pages');
+	maxPage = Number(await response.text());
+	console.log(maxPage);
+	await checkPagesNumber();
+}
+
+async function checkPagesNumber() {
+	console.log(maxPage);
+	if (currentPage > 1) {
+		document.getElementById('backward_page').style.display = 'inline';
+	} else {
+		document.getElementById('backward_page').style.display = 'none';
+	}
+	if (currentPage < maxPage) {
+		document.getElementById('forward_page').style.display = 'inline';
+	} else {
+		document.getElementById('forward_page').style.display = 'none';
 	}
 }

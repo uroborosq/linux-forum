@@ -1,16 +1,16 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, UseFilters, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiCookieAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Role, Topic } from '@prisma/client';
-import { TopicDto } from './topic.dto';
-import { TopicService } from './topic.service';
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, UseFilters, UseGuards } from '@nestjs/common'
+import { ApiBody, ApiCookieAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { Role, Topic } from '@prisma/client'
+import { TopicDto } from './topic.dto'
+import { TopicService } from './topic.service'
 import {
 	PrismaKnownRequestFilter,
 	PrismaValidationErrorFilter
-} from '../prisma-exception-filter/prisma-known-request.filter';
-import { AuthGuard } from '../auth/auth.guard';
-import { Session } from '../auth/session.decorator';
-import { SessionContainer } from 'supertokens-node/recipe/session';
-import { UserService } from '../user/user.service';
+} from '../prisma-exception-filter/prisma-known-request.filter'
+import { AuthGuard } from '../auth/auth.guard'
+import { Session } from '../auth/session.decorator'
+import { SessionContainer } from 'supertokens-node/recipe/session'
+import { UserService } from '../user/user.service'
 
 @ApiTags('topics')
 @Controller('topics')
@@ -26,11 +26,11 @@ export class TopicsController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async getTopic(@Param('topicId') topicId: number): Promise<Topic> {
-		const topic = await this.topicService.get(topicId);
+		const topic = await this.topicService.get(topicId)
 		if (topic == undefined) {
-			throw new HttpException('Not Found', 404);
+			throw new HttpException('Not Found', 404)
 		}
-		return topic;
+		return topic
 	}
 
 	@Get('page/:pageNumber')
@@ -38,7 +38,7 @@ export class TopicsController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async getPage(@Param('pageNumber') pageNumber: number) : Promise<Topic[]> {
-		return this.topicService.getPage(pageNumber);
+		return this.topicService.getPage(pageNumber)
 	}
 
 	@Post()
@@ -52,7 +52,7 @@ export class TopicsController {
 	@UseGuards(new AuthGuard())
 	@ApiCookieAuth()
 	async createTopic(@Session() session: SessionContainer,@Body() topic: Topic): Promise<Topic> {
-		return this.topicService.add(topic, session.getUserId());
+		return this.topicService.add(topic, session.getUserId())
 	}
 	@Delete(':topicId')
 	@ApiOperation({ summary: 'Delete topic' })
@@ -65,9 +65,9 @@ export class TopicsController {
 	@ApiCookieAuth()
 	async deleteTopic(@Session() session: SessionContainer,@Param('topicId') topicId: number) {
 		if (await this.userService.getUserRole(session.getUserId()) == Role.ADMIN || (await this.topicService.get(topicId)).authorId == session.getUserId()) {
-			return this.topicService.deleteTopic(topicId);
+			return this.topicService.deleteTopic(topicId)
 		} else {
-			throw new HttpException('Forbidden', 403);
+			throw new HttpException('Forbidden', 403)
 		}
 	}
 	@Put(':topicId')
@@ -83,9 +83,9 @@ export class TopicsController {
 	@ApiCookieAuth()
 	async updateTopic(@Session() session: SessionContainer, @Param('topicId') topicId: number, @Body() topic: TopicDto) {
 		if (await this.userService.getUserRole(session.getUserId()) == Role.ADMIN || (await this.topicService.get(topicId)).authorId == session.getUserId()) {
-			return this.topicService.update(topicId, topic);
+			return this.topicService.update(topicId, topic)
 		} else {
-			throw new HttpException('Forbidden', 403);
+			throw new HttpException('Forbidden', 403)
 		}
 	}
 }

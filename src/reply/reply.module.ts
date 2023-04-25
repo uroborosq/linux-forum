@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { ReplyController } from './reply.controller';
-import { ReplyService } from './reply.service';
-import { UserService } from '../user/user.service';
+import { Module } from '@nestjs/common'
+import { ReplyController } from './reply.controller'
+import { ReplyService } from './reply.service'
+import { UserService } from '../user/user.service'
 
 @Module({
 	imports: [],

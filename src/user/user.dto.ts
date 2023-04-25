@@ -1,12 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsEmail } from 'class-validator'
 
 export class UserDto {
 	@IsEmail()
 	@ApiProperty()
-		email: string;
+		email: string
 	@ApiProperty()
-		name: string | null;
+		name: string | null
 	@ApiProperty()
-		country: string | null;
+		country: string | null
 }

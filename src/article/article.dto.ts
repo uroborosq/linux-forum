@@ -1,12 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsNumber } from 'class-validator'
 
 export class InputArticleDto {
 	@ApiProperty()
-		title: string;
+		title: string
 	@ApiProperty()
-		text: string;
+		text: string
 	@IsNumber()
 	@ApiProperty()
-		categoryId: number;
+		categoryId: number
 }

@@ -1,17 +1,17 @@
-import { OnModuleInit } from '@nestjs/common';
-import { Article, PrismaClient } from '@prisma/client';
-import { InputArticleDto } from './article.dto';
+import { OnModuleInit } from '@nestjs/common'
+import { Article, PrismaClient } from '@prisma/client'
+import { InputArticleDto } from './article.dto'
 
 export class ArticleService extends PrismaClient implements OnModuleInit {
 	async onModuleInit() {
-		await this.$connect();
+		await this.$connect()
 	}
 	async getById(id: number): Promise<Article> {
 		return this.article.findUnique({
 			where: {
 				id: id
 			}
-		});
+		})
 	}
 
 	async getByCategoryId(id: number): Promise<Article[]> {
@@ -19,7 +19,7 @@ export class ArticleService extends PrismaClient implements OnModuleInit {
 			where: {
 				categoryId: id
 			}
-		});
+		})
 	}
 
 	async createArticle(articleDto: InputArticleDto): Promise<Article> {
@@ -29,8 +29,8 @@ export class ArticleService extends PrismaClient implements OnModuleInit {
 				categoryId: articleDto.categoryId,
 				title: articleDto.title
 			}
-		});
-		return article;
+		})
+		return article
 	}
 
 	async remove(id: number) {
@@ -38,7 +38,7 @@ export class ArticleService extends PrismaClient implements OnModuleInit {
 			where: {
 				id: id
 			}
-		});
+		})
 		// this.userOnArticles.delete({
 		// 	where: {
 		// 		userId_articleI: id
@@ -56,6 +56,6 @@ export class ArticleService extends PrismaClient implements OnModuleInit {
 				title: article.title,
 				text: article.text,
 			}
-		});
+		})
 	}
 }

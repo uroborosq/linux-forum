@@ -3,6 +3,9 @@
 <head>
   <title>Linux Вики и форум</title>
   {{> commonHead }}
+
+  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+  <script  src="/scripts/websocket.js"></script>
 </head>
 <body>
 <header> {{> header }} </header>
@@ -70,9 +73,13 @@
     </div>
     <div class="news">
       <h4>Новости</h4>
-      <div class="news__list">
+      <div class="news__list" id="news__list">
         {{#each news}}
-          <div>{{this}}</div>
+          <div class="news__article">
+          <div class="news__article_title">{{this.title}}</div>
+          <div class="news__article_text">{{this.text}}</div>
+            <div class="news__article_date">{{compactDate this.publishedAt}}</div>
+          </div>
           {{/each}}
       </div>
     </div>
@@ -81,5 +88,6 @@
 <footer> {{> footer }} </footer>
 <script>decorateNavbar()</script>
 <script>applyPreloaderAnimation()</script>
+<script>initSocket()</script>
 </body>
 </html>

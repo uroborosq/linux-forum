@@ -1,11 +1,11 @@
-import { OnModuleInit } from '@nestjs/common';
-import { PrismaClient, Reply } from '@prisma/client';
-import { ReplyDto } from './reply.dto';
-import { isUUID } from 'class-validator';
+import { OnModuleInit } from '@nestjs/common'
+import { PrismaClient, Reply } from '@prisma/client'
+import { ReplyDto } from './reply.dto'
+import { isUUID } from 'class-validator'
 
 export class ReplyService extends PrismaClient implements OnModuleInit {
 	async onModuleInit() {
-		await this.$connect();
+		await this.$connect()
 	}
 
 	async get(id: number): Promise<Reply> {
@@ -13,7 +13,7 @@ export class ReplyService extends PrismaClient implements OnModuleInit {
 			where: {
 				id: id
 			}
-		});
+		})
 	}
 
 	async getByTopicId(id: number, pageNumber: number) {
@@ -33,7 +33,7 @@ export class ReplyService extends PrismaClient implements OnModuleInit {
 					}
 				}
 			}
-		});
+		})
 	}
 
 	async create(reply: ReplyDto, userId: string): Promise<Reply> {
@@ -44,7 +44,7 @@ export class ReplyService extends PrismaClient implements OnModuleInit {
 					text: reply.text,
 					authorId: userId,
 				}
-			});
+			})
 
 			await this.topic.update({
 				where: {
@@ -53,10 +53,10 @@ export class ReplyService extends PrismaClient implements OnModuleInit {
 				data: {
 					updatedAt: new Date(),
 				}
-			});
-			return newReply;
+			})
+			return newReply
 		} else {
-			return undefined;
+			return undefined
 		}
 	}
 
@@ -68,7 +68,7 @@ export class ReplyService extends PrismaClient implements OnModuleInit {
 			data: {
 				text: text
 			}
-		});
+		})
 	}
 
 	async delete(id: number) {
@@ -76,7 +76,7 @@ export class ReplyService extends PrismaClient implements OnModuleInit {
 			where: {
 				id: id
 			}
-		});
+		})
 	}
 
 	async getNumberPages(topicId: number) {
@@ -87,8 +87,8 @@ export class ReplyService extends PrismaClient implements OnModuleInit {
 			where: {
 				topicId: topicId
 			}
-		});
-		return Math.ceil(Number(replies._count.id) / 25);
+		})
+		return Math.ceil(Number(replies._count.id) / 25)
 	}
 }
 

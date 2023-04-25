@@ -1,10 +1,10 @@
-import { ArticleCategory, PrismaClient } from '@prisma/client';
-import { OnModuleInit } from '@nestjs/common';
-import { InputCategoryDto } from './category.dto';
+import { ArticleCategory, PrismaClient } from '@prisma/client'
+import { OnModuleInit } from '@nestjs/common'
+import { InputCategoryDto } from './category.dto'
 
 export class CategoryService extends PrismaClient implements OnModuleInit {
 	async onModuleInit() {
-		await this.$connect();
+		await this.$connect()
 	}
 
 	async getAll(): Promise<ArticleCategory[]> {
@@ -12,7 +12,7 @@ export class CategoryService extends PrismaClient implements OnModuleInit {
 			orderBy: {
 				id: 'asc'
 			}
-		});
+		})
 	}
 	async createCategory(category: InputCategoryDto): Promise<ArticleCategory> {
 		return this.articleCategory.create({
@@ -20,7 +20,7 @@ export class CategoryService extends PrismaClient implements OnModuleInit {
 				name: category.name,
 				parentId: category.parentId
 			}
-		});
+		})
 	}
 
 	async updateCategory(id: number, category: InputCategoryDto): Promise<ArticleCategory> {
@@ -32,7 +32,7 @@ export class CategoryService extends PrismaClient implements OnModuleInit {
 				name: category.name,
 				parentId: category.parentId,
 			}
-		});
+		})
 	}
 
 	async remove(id: number) {
@@ -40,16 +40,16 @@ export class CategoryService extends PrismaClient implements OnModuleInit {
 			where: {
 				parentId: id
 			}
-		});
+		})
 		if (children.length != 0) {
-			return null;
+			return null
 		}
 
 		return this.articleCategory.delete({
 			where: {
 				id: id,
 			}
-		});
+		})
 	}	
 
 	async get(id: number) {
@@ -57,6 +57,6 @@ export class CategoryService extends PrismaClient implements OnModuleInit {
 			where: {
 				id: id
 			}
-		});
+		})
 	}
 }

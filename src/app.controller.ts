@@ -6,19 +6,20 @@ import {
 	Res,
 	UseGuards,
 	UseInterceptors,
-} from '@nestjs/common';
-import { AppService } from './app.service';
-import { AppInterceptor } from './app.interceptor';
-import { ApiExcludeController } from '@nestjs/swagger';
-import { ReplyService } from './reply/reply.service';
-import { TopicService } from './topic/topic.service';
-import { ArticleService } from './article/article.service';
-import { CategoryService } from './category/category.service';
-import { SessionContainer } from 'supertokens-node/recipe/session';
-import { Session } from './auth/session.decorator';
-import { AuthOptionalGuard } from './auth/auth.optional-guard';
-import { UserService } from './user/user.service';
-import { Reply, Role } from '@prisma/client';
+} from '@nestjs/common'
+import { AppService } from './app.service'
+import { AppInterceptor } from './app.interceptor'
+import { ApiExcludeController } from '@nestjs/swagger'
+import { ReplyService } from './reply/reply.service'
+import { TopicService } from './topic/topic.service'
+import { ArticleService } from './article/article.service'
+import { CategoryService } from './category/category.service'
+import { SessionContainer } from 'supertokens-node/recipe/session'
+import { Session } from './auth/session.decorator'
+import { AuthOptionalGuard } from './auth/auth.optional-guard'
+import { UserService } from './user/user.service'
+import { Reply, Role } from '@prisma/client'
+import { NewsService } from './news/news.service'
 
 @ApiExcludeController()
 @Controller()
@@ -30,107 +31,108 @@ export class AppController {
 		private readonly topicService: TopicService,
 		private readonly articleService: ArticleService,
 		private readonly categoryService: CategoryService,
-		private readonly userService: UserService
+		private readonly userService: UserService,
+		private readonly newsService: NewsService
 	) {}
 
 	@Get()
 	@Render('index')
 	// @UseGuards(new AuthOptionalGuard())
 	async root(@Session() session: SessionContainer) {
-		let loggedUser = 'Авторизация';
+		let loggedUser = 'Авторизация'
 		if (session !== undefined) {
-			loggedUser = (await this.userService.getUser(session.getUserId())).name;
+			loggedUser = (await this.userService.getUser(session.getUserId())).name
 		}
 		return {
-			news: '',
+			news: await this.newsService.getLastNews(5),
 			authorizationStatus: loggedUser,
-		};
+		}
 	}
 	@Get('/index.html')
 	@Render('index')
 	@UseGuards(new AuthOptionalGuard())
 	async index(@Session() session: SessionContainer) {
-		let loggedUser = 'Авторизация';
+		let loggedUser = 'Авторизация'
 		if (session !== undefined) {
-			loggedUser = (await this.userService.getUser(session.getUserId())).name;
+			loggedUser = (await this.userService.getUser(session.getUserId())).name
 		}
 		return {
-			news: '',
+			news: this.newsService.getLastNews(5),
 			authorizationStatus: loggedUser,
-		};
+		}
 	}
 
 	@Get('/wiki.html')
 	@Render('wiki')
 	@UseGuards(new AuthOptionalGuard())
 	async wiki(@Session() session: SessionContainer) {
-		let loggedUser = 'Авторизация';
-		let createButton = '';
-		let createCategory = '';
+		let loggedUser = 'Авторизация'
+		let createButton = ''
+		let createCategory = ''
 		if (session !== undefined) {
-			loggedUser = (await this.userService.getUser(session.getUserId())).name;
+			loggedUser = (await this.userService.getUser(session.getUserId())).name
 			if (
 				(await this.userService.getUserRole(session.getUserId())) == Role.ADMIN
 			) {
 				createButton =
-					'<input type="button" value="Создать новую статью" onclick="showArticleCreate()">';
+					'<input type="button" value="Создать новую статью" onclick="showArticleCreate()">'
 				createCategory =
-					'<input type="button" value="Создать новую категорию" onclick="showCategoryCreate()">';
+					'<input type="button" value="Создать новую категорию" onclick="showCategoryCreate()">'
 			}
 		}
 		return {
 			authorizationStatus: loggedUser,
 			createButton: createButton,
 			createCategory: createCategory,
-		};
+		}
 	}
 	@Get('/lc.html')
 	@Render('lc')
 	@UseGuards(new AuthOptionalGuard())
 	async lc(@Session() session: SessionContainer) {
-		let loggedUser = 'Авторизация';
-		let button = '<input type="button" value="Войти через GitHub" onclick="GitHubClicked()">';
-		console.log(session);
+		let loggedUser = 'Авторизация'
+		let button = '<input type="button" value="Войти через GitHub" onclick="GitHubClicked()">'
+		console.log(session)
 		if (session !== undefined) {
-			loggedUser = (await this.userService.getUser(session.getUserId())).name;
+			loggedUser = (await this.userService.getUser(session.getUserId())).name
 			button =
-				'<input type="button" value="Выйти" onclick="async function logOut() {await supertokensSession.signOut(); window.location.href = \'/\';} logOut()">';
+				'<input type="button" value="Выйти" onclick="async function logOut() {await supertokensSession.signOut(); window.location.href = \'/\';} logOut()">'
 		}
 		return {
 			authorizationStatus: loggedUser,
 			button: button,
-		};
+		}
 	}
 
 	@Get('/userlist.html')
 	@Render('userlist')
 	@UseGuards(new AuthOptionalGuard())
 	async userList(@Session() session: SessionContainer) {
-		let loggedUser = 'Авторизация';
+		let loggedUser = 'Авторизация'
 		if (session !== undefined) {
-			loggedUser = (await this.userService.getUser(session.getUserId())).name;
+			loggedUser = (await this.userService.getUser(session.getUserId())).name
 		}
 		return {
 			authorizationStatus: loggedUser,
-		};
+		}
 	}
 	@Get('/forum.html')
 	@Render('forum')
 	@UseGuards(new AuthOptionalGuard())
 	async forum(@Session() session: SessionContainer) {
-		let loggedUser = 'Авторизация';
-		let createButton = '';
+		let loggedUser = 'Авторизация'
+		let createButton = ''
 		if (session !== undefined) {
-			loggedUser = (await this.userService.getUser(session.getUserId())).name;
+			loggedUser = (await this.userService.getUser(session.getUserId())).name
 			if ((await this.userService.getUserRole(session.getUserId())) == Role.ADMIN) {
 				createButton =
-					'<input value="Создать топик" type="button" onclick="showForm()">';
+					'<input value="Создать топик" type="button" onclick="showForm()">'
 			}
 		}
 		return {
 			authorizationStatus: loggedUser,
 			createButton: createButton,
-		};
+		}
 	}
 	@Get('/topic-:topicId')
 	@Render('topic')
@@ -139,21 +141,21 @@ export class AppController {
 		@Session() session: SessionContainer,
 		@Param('topicId') topicId: number
 	) {
-		let loggedUser = 'Авторизация';
-		let topicButtons = '';
-		const replies = await this.replyService.getByTopicId(topicId, 1);
-		const repliesAndButtons: Array<{ reply: Reply; button: string }> = [];
-		let sendArea = '';
+		let loggedUser = 'Авторизация'
+		let topicButtons = ''
+		const replies = await this.replyService.getByTopicId(topicId, 1)
+		const repliesAndButtons: Array<{ reply: Reply; button: string }> = []
+		let sendArea = ''
 		if (session !== undefined) {
-			const role = await this.userService.getUserRole(session.getUserId());
+			const role = await this.userService.getUserRole(session.getUserId())
 
 			if (role == Role.ADMIN || (await this.topicService.get(topicId)).authorId == session.getUserId()) {
 				topicButtons =
 					'<input type="button" value="Обновить топик" onclick="updateTopic()">\n' +
-					`<input type="button" value="Удалить топик" onclick="deleteTopic(${topicId})">`;
+					`<input type="button" value="Удалить топик" onclick="deleteTopic(${topicId})">`
 			}
 
-			loggedUser = (await this.userService.getUser(session.getUserId())).name;
+			loggedUser = (await this.userService.getUser(session.getUserId())).name
 
 			for (const i in replies) {
 				if (replies[i].authorId == session.getUserId() || role == Role.ADMIN) {
@@ -166,9 +168,9 @@ export class AppController {
 							`<button class="icon_button" onclick="deleteReply(${replies[i].id})">\n` +
 							'<i class="fa fa-trash"></i>\n' +
 							'</button>',
-					});
+					})
 				} else {
-					repliesAndButtons.push({ reply: replies[i], button: '' });
+					repliesAndButtons.push({ reply: replies[i], button: '' })
 				}
 			}
 
@@ -177,13 +179,13 @@ export class AppController {
 				<textarea id='topic__sendarea' rows='7' cols='75' tabindex='1'></textarea>
 				</label>
 				<input id="topic__controls_sendbutton" type='button' value='Отправить штуку' onclick='sendReply(${topicId})'>
-				</div>`;
+				</div>`
 		} else {
 			for (const i in replies) {
-				repliesAndButtons.push({ reply: replies[i], button: '' });
+				repliesAndButtons.push({ reply: replies[i], button: '' })
 			}
 		}
-		const topic = await this.topicService.get(topicId);
+		const topic = await this.topicService.get(topicId)
 		return {
 			authorizationStatus: loggedUser,
 			topicID: topicId,
@@ -192,7 +194,7 @@ export class AppController {
 			replies: repliesAndButtons,
 			topicButtons: topicButtons,
 			sendArea: sendArea,
-		};
+		}
 	}
 	@Get('/category-:categoryId')
 	@Render('listOfCategory')
@@ -201,16 +203,16 @@ export class AppController {
 		@Session() session: SessionContainer,
 		@Param('categoryId') categoryId: number
 	) {
-		let buttons = '';
-		let loggedUser = '';
-		const articles = await this.articleService.getByCategoryId(categoryId);
-		const category = await this.categoryService.get(categoryId);
+		let buttons = ''
+		let loggedUser = ''
+		const articles = await this.articleService.getByCategoryId(categoryId)
+		const category = await this.categoryService.get(categoryId)
 		if (session !== undefined) {
-			loggedUser = (await this.userService.getUser(session.getUserId())).name;
+			loggedUser = (await this.userService.getUser(session.getUserId())).name
 			if (
 				(await this.userService.getUserRole(session.getUserId())) == Role.ADMIN
 			) {
-				buttons = `<button class="form__button" type="button" onclick="showForm(${categoryId})">Редактировать</button>`;
+				buttons = `<button class="form__button" type="button" onclick="showForm(${categoryId})">Редактировать</button>`
 			}
 		}
 		return {
@@ -219,7 +221,7 @@ export class AppController {
 			articles: articles,
 			categoryID: category.id,
 			buttons: buttons,
-		};
+		}
 	}
 
 	@Get('/article-:articleId')
@@ -229,16 +231,16 @@ export class AppController {
 		@Session() session: SessionContainer,
 		@Param('articleId') articleId: number
 	) {
-		const article = await this.articleService.getById(articleId);
-		let button = '';
-		let loggedUser = 'Авторизация';
+		const article = await this.articleService.getById(articleId)
+		let button = ''
+		let loggedUser = 'Авторизация'
 		if (session !== undefined) {
-			loggedUser = (await this.userService.getUser(session.getUserId())).name;
+			loggedUser = (await this.userService.getUser(session.getUserId())).name
 			if (
 				(await this.userService.getUserRole(session.getUserId())) == Role.ADMIN
 			) {
 				button =
-					`<input type="button" value="Редактировать" onclick="showForm(${articleId})">\n`;
+					`<input type="button" value="Редактировать" onclick="showForm(${articleId})">\n`
 			}
 		}
 		return {
@@ -248,6 +250,6 @@ export class AppController {
 			articleID: article.id,
 			categoryID: article.categoryId,
 			button: button,
-		};
+		}
 	}
 }

@@ -1,17 +1,17 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsNumber, IsString } from 'class-validator'
 
 export class ReplyDto {
 	@IsString()
 	@ApiProperty()
-		text: string;
+		text: string
 	@IsNumber()
 	@ApiProperty()
-		topicId: number;
+		topicId: number
 }
 
 export class TextDto {
 	@IsString()
 	@ApiProperty()
-		text: string;
+		text: string
 }

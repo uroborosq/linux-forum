@@ -1,4 +1,4 @@
-import { ApiCookieAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCookieAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import {
 	Body,
 	Controller,
@@ -10,18 +10,18 @@ import {
 	Post,
 	UseFilters,
 	UseGuards
-} from '@nestjs/common';
-import { ArticleCategory, Role } from '@prisma/client';
-import { InputCategoryDto } from './category.dto';
-import { CategoryService } from './category.service';
+} from '@nestjs/common'
+import { ArticleCategory, Role } from '@prisma/client'
+import { InputCategoryDto } from './category.dto'
+import { CategoryService } from './category.service'
 import {
 	PrismaKnownRequestFilter,
 	PrismaValidationErrorFilter
-} from '../prisma-exception-filter/prisma-known-request.filter';
-import { UserService } from '../user/user.service';
-import { AuthGuard } from '../auth/auth.guard';
-import { SessionContainer } from 'supertokens-node/recipe/session';
-import { Session } from '../auth/session.decorator';
+} from '../prisma-exception-filter/prisma-known-request.filter'
+import { UserService } from '../user/user.service'
+import { AuthGuard } from '../auth/auth.guard'
+import { SessionContainer } from 'supertokens-node/recipe/session'
+import { Session } from '../auth/session.decorator'
 
 @ApiTags('categories')
 @Controller('categories')
@@ -34,7 +34,7 @@ export class CategoryController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async getCategories(): Promise<ArticleCategory[]> {
-		return this.categoryService.getAll();
+		return this.categoryService.getAll()
 	}
 
 	@Post()
@@ -49,9 +49,9 @@ export class CategoryController {
 	@ApiCookieAuth()
 	async addCategory(@Session() session: SessionContainer,@Body() category: InputCategoryDto): Promise<ArticleCategory> {
 		if (await this.userService.getUserRole(session.getUserId()) != Role.ADMIN) {
-			throw new HttpException('Only admins can modify this data', 403);
+			throw new HttpException('Only admins can modify this data', 403)
 		}
-		return this.categoryService.createCategory(category);
+		return this.categoryService.createCategory(category)
 	}
 
 	@Patch(':id')
@@ -62,9 +62,9 @@ export class CategoryController {
 	@ApiCookieAuth()
 	async update(@Session() session: SessionContainer,@Param('id') id: number, @Body() category: InputCategoryDto) {
 		if (await this.userService.getUserRole(session.getUserId()) != Role.ADMIN) {
-			throw new HttpException('Only admins can modify this data', 403);
+			throw new HttpException('Only admins can modify this data', 403)
 		}
-		return this.categoryService.updateCategory(id, category);
+		return this.categoryService.updateCategory(id, category)
 	}
 
 	@Delete(':id')
@@ -75,13 +75,13 @@ export class CategoryController {
 	@ApiCookieAuth()
 	async delete(@Session() session: SessionContainer,@Param('id') id: number) {
 		if (await this.userService.getUserRole(session.getUserId()) != Role.ADMIN) {
-			throw new HttpException('Only admins can modify this data', 403);
+			throw new HttpException('Only admins can modify this data', 403)
 		}
-		const response = await this.categoryService.remove(id);
+		const response = await this.categoryService.remove(id)
 		if (response == null) {
-			throw new HttpException('Category have children', 400);
+			throw new HttpException('Category have children', 400)
 		}
-		return response;
+		return response
 	}
 
 	@Get(':categoryId')
@@ -89,7 +89,7 @@ export class CategoryController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async get(@Param('categoryId') categoryId: number) {
-		return this.categoryService.get(categoryId);
+		return this.categoryService.get(categoryId)
 	}
 
 }

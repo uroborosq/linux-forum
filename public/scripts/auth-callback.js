@@ -10,14 +10,14 @@
 				supertokensSession.init(),
 				supertokensThirdParty.init(),
 			],
-		});
-		const response = await supertokensThirdParty.signInAndUp({});
+		})
+		const response = await supertokensThirdParty.signInAndUp({})
 		if (response.status !== 'OK') {
-			console.log(response);
-			alert('Это бан');
+			console.log(response)
+			alert('Это бан')
 		}
-		window.location.assign('/');
+		window.location.assign('/')
 	} catch (err) {
-		alert(err.message);
+		alert(err.message)
 	}
-})();
+})()

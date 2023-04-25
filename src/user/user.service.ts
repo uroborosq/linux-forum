@@ -1,10 +1,10 @@
-import { PrismaClient, User, Role } from '@prisma/client';
-import { NotImplementedException, OnModuleInit } from '@nestjs/common';
-import { UserDto } from './user.dto';
-import { isUUID } from 'class-validator';
+import { PrismaClient, User, Role } from '@prisma/client'
+import { NotImplementedException, OnModuleInit } from '@nestjs/common'
+import { UserDto } from './user.dto'
+import { isUUID } from 'class-validator'
 export class UserService extends PrismaClient implements OnModuleInit{
 	async onModuleInit() {
-		await this.$connect();
+		await this.$connect()
 	}
 
 	async getUser(id: string): Promise<User> {
@@ -12,7 +12,7 @@ export class UserService extends PrismaClient implements OnModuleInit{
 			where: {
 				id : id
 			}
-		});
+		})
 	}
 
 	async addUser(user: UserDto, userId: string): Promise<User> {
@@ -24,9 +24,9 @@ export class UserService extends PrismaClient implements OnModuleInit{
 					name: user.name,
 					country: user.country
 				}
-			});
+			})
 		}
-		return undefined;
+		return undefined
 	}
 	async changeRole(id: string, role: Role): Promise<User> {
 		return this.user.update({
@@ -36,7 +36,7 @@ export class UserService extends PrismaClient implements OnModuleInit{
 			data : {
 				role: role
 			}
-		});
+		})
 	}
 	async getUserRole(id: string): Promise<Role> {
 		const role = await this.user.findUnique({
@@ -46,11 +46,11 @@ export class UserService extends PrismaClient implements OnModuleInit{
 			select: {
 				role : true
 			},
-		});
+		})
 		if (role == null) {
-			return null;
+			return null
 		}
-		return role.role;
+		return role.role
 	}
 
 	async updateUser(id: string, user: UserDto) {
@@ -63,7 +63,7 @@ export class UserService extends PrismaClient implements OnModuleInit{
 				country : user.country,
 				email : user.email
 			}
-		});
+		})
 	}
 
 	async getPage(pageNumber: number) {
@@ -73,7 +73,7 @@ export class UserService extends PrismaClient implements OnModuleInit{
 			orderBy: {
 				id: 'asc'
 			}
-		});
+		})
 	}
 
 	async getPageNumber() {
@@ -81,7 +81,7 @@ export class UserService extends PrismaClient implements OnModuleInit{
 			_count: {
 				id: true
 			},
-		});
-		return Math.ceil(Number(replies._count.id) / 25);
+		})
+		return Math.ceil(Number(replies._count.id) / 25)
 	}
 }

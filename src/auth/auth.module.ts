@@ -3,12 +3,12 @@ import {
 	Module,
 	NestModule,
 	DynamicModule,
-} from '@nestjs/common';
+} from '@nestjs/common'
 
-import { AuthMiddleware } from './auth.middleware';
-import { ConfigInjectionToken, AuthModuleConfig } from './config.interface';
-import { SupertokensService } from './supertokens/supertokens.service';
-import { AuthController } from './auth.controller';
+import { AuthMiddleware } from './auth.middleware'
+import { ConfigInjectionToken, AuthModuleConfig } from './config.interface'
+import { SupertokensService } from './supertokens/supertokens.service'
+import { AuthController } from './auth.controller'
 
 @Module({
 	providers: [SupertokensService],
@@ -17,7 +17,7 @@ import { AuthController } from './auth.controller';
 })
 export class AuthModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {
-		consumer.apply(AuthMiddleware).forRoutes('*');
+		consumer.apply(AuthMiddleware).forRoutes('*')
 	}
 
 	static forRoot({
@@ -40,6 +40,6 @@ export class AuthModule implements NestModule {
 			exports: [],
 			imports: [],
 			module: AuthModule,
-		};
+		}
 	}
 }

@@ -9,15 +9,15 @@ import {
 	Put,
 	Query,
 	UseFilters
-} from '@nestjs/common';
+} from '@nestjs/common'
 
 import {
 	ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags
-} from '@nestjs/swagger';
-import { User, Role } from '@prisma/client';
-import { UserService } from './user.service';
-import { UserDto } from './user.dto';
-import { PrismaKnownRequestFilter, PrismaValidationErrorFilter } from '../prisma-exception-filter/prisma-known-request.filter';
+} from '@nestjs/swagger'
+import { User, Role } from '@prisma/client'
+import { UserService } from './user.service'
+import { UserDto } from './user.dto'
+import { PrismaKnownRequestFilter, PrismaValidationErrorFilter } from '../prisma-exception-filter/prisma-known-request.filter'
 
 
 @ApiTags('users')
@@ -36,11 +36,11 @@ export class UserController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async getUser(@Param('userId') userId: string): Promise<User> {
-		const user = await this.userService.getUser(userId);
+		const user = await this.userService.getUser(userId)
 		if (user == undefined) {
-			throw new HttpException('Not Found', 404);
+			throw new HttpException('Not Found', 404)
 		}
-		return user;
+		return user
 	}
 	@Patch(':userId')
 	@ApiOperation({ summary: 'Change role of user' })
@@ -50,11 +50,11 @@ export class UserController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async changeRole(@Param('userId') userId: string, @Query('role') role: Role): Promise<User> {
-		const user = await this.userService.changeRole(userId, role);
+		const user = await this.userService.changeRole(userId, role)
 		if (user == undefined) {
-			throw new HttpException('Not found', 404);
+			throw new HttpException('Not found', 404)
 		}
-		return user;
+		return user
 	}
 	@Put(':userId')
 	@ApiOperation({ summary: 'Change user info' })
@@ -64,7 +64,7 @@ export class UserController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async updateUser(@Param('userId') userId: string, @Body() user: UserDto) {
-		return this.userService.updateUser(userId, user);
+		return this.userService.updateUser(userId, user)
 	}
 	@Get('/role/:userId')
 	@ApiOperation({ summary: 'Get user role' })
@@ -74,24 +74,24 @@ export class UserController {
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async getUserRole(@Param('userId') userId: string): Promise<Role> {
-		const role = await this.userService.getUserRole(userId);
+		const role = await this.userService.getUserRole(userId)
 		if (role == undefined) {
-			throw new HttpException('Not Found', 404);
+			throw new HttpException('Not Found', 404)
 		}
-		return role;
+		return role
 	}
 	@Get('/page/:pageNumber')
 	@ApiOperation({summary: 'Get certain page'})
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async getPage(@Param('pageNumber') pageNumber: number): Promise<User[]> {
-		return this.userService.getPage(pageNumber);
+		return this.userService.getPage(pageNumber)
 	}
 
 	@Get('/pages')
 	@UseFilters(PrismaKnownRequestFilter)
 	@UseFilters(PrismaValidationErrorFilter)
 	async getNumberOfPages() {
-		return this.getNumberOfPages();
+		return this.getNumberOfPages()
 	}
 }

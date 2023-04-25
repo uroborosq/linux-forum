@@ -1,11 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
+import { IsString } from 'class-validator'
 
 export class TopicDto {
 	@IsString()
 	@ApiProperty()
-		description: string;
+		description: string
 	@IsString()
 	@ApiProperty()
-		title: string;
+		title: string
 }

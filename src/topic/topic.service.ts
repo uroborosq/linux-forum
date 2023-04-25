@@ -1,11 +1,11 @@
-import { OnModuleInit } from '@nestjs/common';
-import { PrismaClient, Topic } from '@prisma/client';
-import { TopicDto } from './topic.dto';
-import { isUUID } from 'class-validator';
+import { OnModuleInit } from '@nestjs/common'
+import { PrismaClient, Topic } from '@prisma/client'
+import { TopicDto } from './topic.dto'
+import { isUUID } from 'class-validator'
 
 export class TopicService extends PrismaClient implements OnModuleInit {
 	async onModuleInit() {
-		await this.$connect();
+		await this.$connect()
 	}
 
 	async get(id: number) : Promise<Topic> {
@@ -13,7 +13,7 @@ export class TopicService extends PrismaClient implements OnModuleInit {
 			where: {
 				id: id
 			}
-		});
+		})
 	}
 
 	async add(topic: TopicDto, userId:  string) {
@@ -24,9 +24,9 @@ export class TopicService extends PrismaClient implements OnModuleInit {
 					title: topic.title,
 					authorId: userId,
 				}
-			});
+			})
 		} else {
-			return undefined;
+			return undefined
 		}
 	}
 
@@ -35,12 +35,12 @@ export class TopicService extends PrismaClient implements OnModuleInit {
 			where: {
 				topicId: id
 			}
-		});
+		})
 		return this.topic.delete({
 			where: {
 				id: id
 			}
-		});
+		})
 	}
 
 	async update(id: number, topic: TopicDto) {
@@ -52,7 +52,7 @@ export class TopicService extends PrismaClient implements OnModuleInit {
 				description: topic.description,
 				title: topic.title,
 			}
-		});
+		})
 	}
 
 	async getPage(pageNumber: number) {
@@ -62,7 +62,7 @@ export class TopicService extends PrismaClient implements OnModuleInit {
 			orderBy: {
 				updatedAt: 'desc'
 			}
-		});
+		})
 	}
 
 

@@ -1,6 +1,6 @@
-import { AppInfo } from 'supertokens-node/types';
+import { AppInfo } from 'supertokens-node/types'
 
-export const ConfigInjectionToken = 'ConfigInjectionToken';
+export const ConfigInjectionToken = 'ConfigInjectionToken'
 
 export type AuthModuleConfig = {
   appInfo: AppInfo;

@@ -1,7 +1,7 @@
-import ThirdParty from 'supertokens-node/recipe/thirdparty';
-import Session from 'supertokens-node/recipe/session';
-import { PrismaClient } from '@prisma/client';
-import * as process from 'process';
+import ThirdParty from 'supertokens-node/recipe/thirdparty'
+import Session from 'supertokens-node/recipe/session'
+import { PrismaClient } from '@prisma/client'
+import * as process from 'process'
 
 export const appInfo = {
 	appName: 'linux-forum',
@@ -9,9 +9,9 @@ export const appInfo = {
 	websiteDomain: process.env.HOST,
 	apiBasePath: '/auth',
 	websiteBasePath: '/index.html'
-};
+}
 
-export const connectionUri = process.env.CONNECTION_URI;
+export const connectionUri = process.env.CONNECTION_URI
 
 export const recipeList = [
 	ThirdParty.init({
@@ -29,13 +29,13 @@ export const recipeList = [
 					...originalImplementation,
 					signInUpPOST: async function(input) {
 						if (originalImplementation.signInUpPOST === undefined) {
-							throw Error('Should never come here');
+							throw Error('Should never come here')
 						}
-						const response = await originalImplementation.signInUpPOST(input);
-						console.log(response);
+						const response = await originalImplementation.signInUpPOST(input)
+						console.log(response)
 						if (response.status === 'OK') {
-							const { id, email } = response.user;
-							const client = new PrismaClient();
+							const { id, email } = response.user
+							const client = new PrismaClient()
 							if (await client.user.findUnique({ where: { id: id } }) == null) {
 								await client.user.create({
 									data: {
@@ -43,14 +43,14 @@ export const recipeList = [
 										email: email,
 										name: email
 									}
-								});
+								})
 							}
 						}
-						return response;
+						return response
 					}
-				};
+				}
 			}
 		},}
 	),
 	Session.init(),
-];
+]

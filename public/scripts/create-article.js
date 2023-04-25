@@ -1,5 +1,5 @@
 function showArticleCreate() {
-	let area = document.getElementById('wiki__createarea');
+	let area = document.getElementById('wiki__createarea')
 	area.innerHTML = `<form id="wiki__createarea_form">
     <fieldset>
     <legend>Введите данные статьи</legend>
@@ -19,20 +19,20 @@ function showArticleCreate() {
     <label id="wiki__createarea_form_output"></label>
     <input type="button" value="Создать" onclick="createArticle()">
     <input type="button" value="Закрыть" onclick="hideArticleCreate()">
-    </form>`;
+    </form>`
 }
 
 function hideArticleCreate() {
 	document.getElementById('wiki__createarea').innerHTML =
-		'<input type="button" value="Создать новую статью" onclick="showArticleCreate()">';
+		'<input type="button" value="Создать новую статью" onclick="showArticleCreate()">'
 }
 
 async function createArticle() {
-	const text = document.getElementById('wiki__sendarea').value;
-	const title = document.getElementById('wiki__createarea_form_title').value;
+	const text = document.getElementById('wiki__sendarea').value
+	const title = document.getElementById('wiki__createarea_form_title').value
 	const category = document.getElementById(
 		'wiki__createarea_form_category'
-	).value;
+	).value
 
 	const response = await fetch('/articles', {
 		method: 'POST',
@@ -45,12 +45,12 @@ async function createArticle() {
 			categoryId: Number(category),
 			mainternersIds: [],
 		}),
-	});
+	})
 
 
 	if (response.status === 200 || response.status === 201) {
 		document.getElementById('wiki__createarea_form_output').innerText =
-			'Статья успешно создана';
+			'Статья успешно создана'
 	} else if (await CheckRefresh(response)) {
 		const response = await fetch('/articles', {
 			method: 'POST',
@@ -63,24 +63,24 @@ async function createArticle() {
 				categoryId: Number(category),
 				mainternersIds: [],
 			}),
-		});
+		})
 		if (response.status === 200 || response.status === 201) {
 			document.getElementById('wiki__createarea_form_output').innerText =
-				'Статья успешно создана';
+				'Статья успешно создана'
 		} else {
-			const funnyText = await response.text();
+			const funnyText = await response.text()
 			document.getElementById('wiki__createarea_form_output').innerText =
-				'Статья успешно не создана' + funnyText;
+				'Статья успешно не создана' + funnyText
 		}
 	} else {
-		const funnyText = await response.text();
+		const funnyText = await response.text()
 		document.getElementById('wiki__createarea_form_output').innerText =
-			'Статья успешно не создана' + funnyText;
+			'Статья успешно не создана' + funnyText
 	}
 }
 
 function showCategoryCreate() {
-	let area = document.getElementById('wiki__createcategory');
+	let area = document.getElementById('wiki__createcategory')
 	area.innerHTML = `<form id="wiki__createcategory_form">
     <fieldset>
     <legend>Введите данные статьи</legend>
@@ -96,19 +96,19 @@ function showCategoryCreate() {
     <label id="wiki__createcategory_form_output"></label>
     <input type="button" value="Создать" onclick="createCategory()">
     <input type="button" value="Закрыть" onclick="hideCategoryCreate()">
-    </form>`;
+    </form>`
 }
 
 function hideCategoryCreate() {
 	document.getElementById('wiki__createcategory').innerHTML =
-		'<input type="button" value="Создать новую категорию" onclick="showCategoryCreate()">';
+		'<input type="button" value="Создать новую категорию" onclick="showCategoryCreate()">'
 }
 
 async function createCategory() {
-	const title = document.getElementById('wiki__createcategory_form_title').value;
+	const title = document.getElementById('wiki__createcategory_form_title').value
 	const category = Number(document.getElementById(
 		'wiki__createcategory_form_category'
-	).value);
+	).value)
 
 	const response = await fetch('/categories', {
 		method: 'POST',
@@ -119,12 +119,12 @@ async function createCategory() {
 			name: title,
 			parentId: category,
 		}),
-	});
+	})
 
 	if (response.status === 200 || response.status === 201) {
 		document.getElementById('wiki__createcategory_form_output').innerText =
-			'Категория успешно создана';
-		location.reload();
+			'Категория успешно создана'
+		location.reload()
 	} else if (await CheckRefresh(response)) {
 		const response = await fetch('/categories', {
 			method: 'POST',
@@ -135,19 +135,19 @@ async function createCategory() {
 				name: title,
 				parentId: category,
 			}),
-		});
+		})
 		if (response.status === 200 || response.status === 201) {
 			document.getElementById('wiki__createcategory_form_output').innerText =
-				'Категория успешно создана';
-			location.reload();
+				'Категория успешно создана'
+			location.reload()
 		} else {
-			const funnyText = await response.text();
+			const funnyText = await response.text()
 			document.getElementById('wiki__createcategory_form_output').innerText =
-				'Категория успешно не создана' + funnyText;
+				'Категория успешно не создана' + funnyText
 		}
 	} else {
-		const funnyText = await response.text();
+		const funnyText = await response.text()
 		document.getElementById('wiki__createcategory_form_output').innerText =
-			'Категория успешно не создана' + funnyText;
+			'Категория успешно не создана' + funnyText
 	}
 }
