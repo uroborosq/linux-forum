@@ -16,8 +16,10 @@
       </div>
     </div>
     <div class="box" id="userlist"></div>
-    <p><input value="Предыдущая страница" type="button" onclick="renderUsers(currentPage - 1)"> <span id="pagenumber">1</span> <input value="Следующая страница" type="button" onclick="renderUsers(currentPage + 1)"></p>
-
+    <div class="topic__controls_page-switcher"><input id='backward_page' value='Предыдущая страница' type='button'
+                                                      onclick='renderUsers(currentPage - 1, {{topicID}})'> <span id='pagenumber'>1</span> <input id='forward_page'
+                                                                                                                                                 value='Следующая страница' type='button' onclick='renderUsers(currentPage + 1, {{topicID}})'>
+    </div>
   </main>
   <footer>{{>footer}}</footer>
   <script>decorateNavbar()</script>
