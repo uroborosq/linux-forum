@@ -1,24 +1,25 @@
-FROM node:16 AS builder
+FROM node:18 as build
 
-# Create app directory
 WORKDIR /app
 
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-COPY package*.json ./
-COPY prisma ./prisma/
+COPY package.json .
+COPY package-lock.json .
+COPY ./public/package.json ./public/
+COPY ./public/package-lock.json ./public/.
+ENV PATH "/app/node_modules/.bin/:$PATH"
 
-# Install app dependencies
 RUN npm install
 
 COPY . .
-
 RUN npm run build
+RUN npx prisma generate
 
-FROM node:16
-
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/dist ./dist
-
+FROM node:18 as launch
+WORKDIR /app
+ENV PATH "/app/node_modules/.bin/:$PATH"
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/public ./public
+COPY --from=build /app/views ./views
 EXPOSE 3000
-CMD [ "npm", "run", "start:prod" ]
+ENTRYPOINT [ "node", "dist/main.js"]
