@@ -50,14 +50,13 @@ export class AppController {
 	}
 	@Get('/index.html')
 	@Render('index')
-	@UseGuards(new AuthOptionalGuard())
 	async index(@Session() session: SessionContainer) {
 		let loggedUser = 'Авторизация'
 		if (session !== undefined) {
 			loggedUser = (await this.userService.getUser(session.getUserId())).name
 		}
 		return {
-			news: this.newsService.getLastNews(5),
+			news: await this.newsService.getLastNews(5),
 			authorizationStatus: loggedUser,
 		}
 	}
